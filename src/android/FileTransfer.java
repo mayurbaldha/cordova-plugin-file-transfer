@@ -906,6 +906,7 @@ public class FileTransfer extends CordovaPlugin {
                             }
                             safeClose(inputStream);
                             safeClose(outputStream);
+                            refresh_gallery(file);
                         }
 
                         Log.d(LOG_TAG, "Saved file: " + target);
@@ -988,7 +989,25 @@ public class FileTransfer extends CordovaPlugin {
             }
         });
     }
+/*
 
+refresh Gallery After Download of Image
+
+
+*/
+
+public void refresh_gallery(File file){
+    	  MediaScannerConnection.scanFile(        
+    	      this.cordova.getActivity().getApplicationContext(), 
+    	         new String[]{file.getAbsolutePath()}, 
+    	         null, 
+    	         new OnScanCompletedListener() {
+    	            @Override
+    	            public void onScanCompleted(String filepath, Uri uri) {
+    	               Log.v("Gallery", "file" + filepath + " was scanned successfully: " + uri);
+    	            }
+    	     });
+    	 }
     /**
      * Abort an ongoing upload or download.
      */
